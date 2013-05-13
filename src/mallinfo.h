@@ -14,6 +14,10 @@ struct mallinfo
   int keepcost; /* top-most, releasable (via malloc_trim) space */
 };
 
+struct mallinfo mallinfo(); /*{
+    return __mallinfo();
+}*/
+
 struct myinfo
 {
     int arena;
@@ -23,4 +27,7 @@ struct myinfo
     int usdblks;
     int maxfreeblk;
 };
+
+struct myinfo myinfo();
+
 #endif
