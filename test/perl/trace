@@ -1,0 +1,123 @@
+Выделение памяти:
+Allocate 4 byte
+fit_malloc: size= 4
+morecore: try to alloc 4096
+morecore: create block 0x91d4000 with size=4080
+split block 0x91d4000 to 0x91d4000(4) and 0x91d4014(4060)
+fit_malloc: returning 0x91d400c
+4096 4060 4 1 1 4060 0.000 0.879 182
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d4014 to 0x91d4014(4) and 0x91d4028(4040)
+fit_malloc: returning 0x91d4020
+4096 4040 8 1 2 4040 0.000 1.367 9
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d4028 to 0x91d4028(4) and 0x91d403c(4020)
+fit_malloc: returning 0x91d4034
+4096 4020 12 1 3 4020 0.000 1.855 16
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d403c to 0x91d403c(4) and 0x91d4050(4000)
+fit_malloc: returning 0x91d4048
+4096 4000 16 1 4 4000 0.000 2.344 16
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d4050 to 0x91d4050(4) and 0x91d4064(3980)
+fit_malloc: returning 0x91d405c
+4096 3980 20 1 5 3980 0.000 2.832 5
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d4064 to 0x91d4064(4) and 0x91d4078(3960)
+fit_malloc: returning 0x91d4070
+4096 3960 24 1 6 3960 0.000 3.320 5
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d4078 to 0x91d4078(4) and 0x91d408c(3940)
+fit_malloc: returning 0x91d4084
+4096 3940 28 1 7 3940 0.000 3.809 5
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d408c to 0x91d408c(4) and 0x91d40a0(3920)
+fit_malloc: returning 0x91d4098
+4096 3920 32 1 8 3920 0.000 4.297 5
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d40a0 to 0x91d40a0(4) and 0x91d40b4(3900)
+fit_malloc: returning 0x91d40ac
+4096 3900 36 1 9 3900 0.000 4.785 4
+Allocate 4 byte
+fit_malloc: size= 4
+split block 0x91d40b4 to 0x91d40b4(4) and 0x91d40c8(3880)
+fit_malloc: returning 0x91d40c0
+4096 3880 40 1 10 3880 0.000 5.273 5
+Очистка памяти:
+free 0x91d40c0
+fit_free: ptr= 0x91d40c0
+fit_free: set block 0x91d40b4 with size=4 as free
+merge: next - 0x91d40c8
+merge blocks 0x91d40b4 and 0x91d40c8
+merge: prev - 0x91d40a0
+4096 3900 36 1 9 3900 0.000 4.785 6
+free 0x91d40ac
+fit_free: ptr= 0x91d40ac
+fit_free: set block 0x91d40a0 with size=4 as free
+merge: next - 0x91d40b4
+merge blocks 0x91d40a0 and 0x91d40b4
+merge: prev - 0x91d408c
+4096 3920 32 1 8 3920 0.000 4.297 5
+free 0x91d4098
+fit_free: ptr= 0x91d4098
+fit_free: set block 0x91d408c with size=4 as free
+merge: next - 0x91d40a0
+merge blocks 0x91d408c and 0x91d40a0
+merge: prev - 0x91d4078
+4096 3940 28 1 7 3940 0.000 3.809 5
+free 0x91d4084
+fit_free: ptr= 0x91d4084
+fit_free: set block 0x91d4078 with size=4 as free
+merge: next - 0x91d408c
+merge blocks 0x91d4078 and 0x91d408c
+merge: prev - 0x91d4064
+4096 3960 24 1 6 3960 0.000 3.320 5
+free 0x91d4070
+fit_free: ptr= 0x91d4070
+fit_free: set block 0x91d4064 with size=4 as free
+merge: next - 0x91d4078
+merge blocks 0x91d4064 and 0x91d4078
+merge: prev - 0x91d4050
+4096 3980 20 1 5 3980 0.000 2.832 5
+free 0x91d405c
+fit_free: ptr= 0x91d405c
+fit_free: set block 0x91d4050 with size=4 as free
+merge: next - 0x91d4064
+merge blocks 0x91d4050 and 0x91d4064
+merge: prev - 0x91d403c
+4096 4000 16 1 4 4000 0.000 2.344 5
+free 0x91d4048
+fit_free: ptr= 0x91d4048
+fit_free: set block 0x91d403c with size=4 as free
+merge: next - 0x91d4050
+merge blocks 0x91d403c and 0x91d4050
+merge: prev - 0x91d4028
+4096 4020 12 1 3 4020 0.000 1.855 7
+free 0x91d4034
+fit_free: ptr= 0x91d4034
+fit_free: set block 0x91d4028 with size=4 as free
+merge: next - 0x91d403c
+merge blocks 0x91d4028 and 0x91d403c
+merge: prev - 0x91d4014
+4096 4040 8 1 2 4040 0.000 1.367 5
+free 0x91d4020
+fit_free: ptr= 0x91d4020
+fit_free: set block 0x91d4014 with size=4 as free
+merge: next - 0x91d4028
+merge blocks 0x91d4014 and 0x91d4028
+merge: prev - 0x91d4000
+4096 4060 4 1 1 4060 0.000 0.879 5
+free 0x91d400c
+fit_free: ptr= 0x91d400c
+fit_free: set block 0x91d4000 with size=4 as free
+merge: next - 0x91d4014
+merge blocks 0x91d4000 and 0x91d4014
+4096 4080 0 1 0 4080 0.000 0.391 5
