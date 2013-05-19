@@ -17,13 +17,16 @@
 static inline void my_show_stat(void) {
     struct myinfo stat = myinfo();
     double fragm;
+    double fullness;
     if (stat.freemem == 0) {
         fragm = 100;
+        fullness = 0;
     } else {
     	fragm = ((double)(stat.freemem - stat.maxfreeblk) * 100) / stat.freemem;
+        fullness = (1 - (double)stat.freemem / stat.arena) * 100; 
     }
-    printf("%d %d %d %d %d %d %.3f ", stat.arena, stat.freemem, stat.usdmem, stat.freeblks, stat.usdblks,
- stat.maxfreeblk, fragm);
+    printf("%d %d %d %d %d %d %.3f %.3f ", stat.arena, stat.freemem, stat.usdmem, stat.freeblks, stat.usdblks,
+ stat.maxfreeblk, fragm, fullness);
     /*printf("%.3f\n",  fragm);*/
     /*printf("%d %d %d\n", stat.arena, stat.freemem, stat.maxfreeblk);*/
 }
