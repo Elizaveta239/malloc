@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <malloc.h>
+#include <sys/times.h>
 
-int main() {
+int main(void) {
   //struct mallinfo stat;
   printf("Выделение памяти:\n");
   int i;
@@ -17,6 +18,7 @@ int main() {
 //    print_heap_dump();
 //    show_stat();
   }
+  /*printf("%ld", CLOCKS_PER_SEC);*/
   return 0;
 }
 

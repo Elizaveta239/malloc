@@ -1,7 +1,7 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#include <stddef.h>
+/*#include <stddef.h>*/
 
 #define BEST_FIT
 
