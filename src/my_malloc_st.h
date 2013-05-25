@@ -19,8 +19,8 @@ static inline void my_show_stat(void) {
     double fragm;
     double fullness;
     if (stat.freemem == 0) {
-        fragm = 100;
-        fullness = 0;
+        fragm = 0;
+        fullness = 100;
     } else {
     	fragm = ((double)(stat.freemem - stat.maxfreeblk) * 100) / stat.freemem;
         fullness = (1 - (double)stat.freemem / stat.arena) * 100; 

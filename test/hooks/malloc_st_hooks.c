@@ -6,7 +6,7 @@
 #include <malloc.h>
 #include "time_st.h"
 
-static inline void show_stat(void);
+static inline void show_stat(int flag, int size, void* result);
 
 /* Prototypes for our hooks.  */
 static inline void my_init_hook (void);
@@ -20,7 +20,7 @@ static inline long time_st;
 /* Override initializing hook from the C library. */
 inline void (*__MALLOC_HOOK_VOLATILE __malloc_initialize_hook) (void) = my_init_hook;
 
-static inline void show_stat(void) {
+static inline void show_stat(int flag, int size, void* result) {
   struct mallinfo stat = mallinfo();
   double fragm;
   double fullness;
@@ -30,8 +30,16 @@ static inline void show_stat(void) {
     fragm = ((double)(stat.fordblks - stat.keepcost) * 100) / stat.fordblks;
   }*/
   
+  /*if (flag == 1) {
+    printf("Allocate %d bytes\n", size);
+    printf("fit_malloc: returning %p \n",(void *) &result);
+  } else {
+    printf("free %p\n",(void *) &result);
+  }
+  */
+
   if (stat.fordblks == 0) {
-    fullness = 0;
+    fullness = 100;
   } else {
     fullness = (1 - (double) stat.fordblks / stat.arena) * 100;
   }
@@ -58,13 +66,15 @@ static inline void *my_malloc_hook (size_t size, const void *caller) {
     /* Call recursively */
     time_start();
     result = malloc (size);
+    /*printf("Allocate %d bytes\n", size);
+    printf("fit_malloc: returning " + result + "\n");*/
     time_st = time_stop();
     /* Save underlying hooks */
     old_malloc_hook = __malloc_hook;
     old_free_hook = __free_hook;
     /* printf might call malloc, so protect it too. */
     /*printf ("malloc (%u) returns %p\n", (unsigned int) size, result);*/
-    show_stat();
+    show_stat(1, size, result);
     /* Restore our own hooks */
     __malloc_hook = my_malloc_hook;
     __free_hook = my_free_hook;
@@ -78,13 +88,14 @@ static inline void my_free_hook (void *ptr, const void *caller) {
     /* Call recursively */
     time_start();
     free (ptr);
+    /*printf("free " + ptr + "\n");*/
     time_st = time_stop();
     /* Save underlying hooks */
     old_malloc_hook = __malloc_hook;
     old_free_hook = __free_hook;
     /* printf might call free, so protect it too. */
     /*printf ("freed pointer %p\n", ptr);*/
-    show_stat();
+    show_stat(0, 0, ptr);
     /* Restore our own hooks */
     __malloc_hook = my_malloc_hook;
     __free_hook = my_free_hook;

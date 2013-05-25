@@ -16,7 +16,7 @@
 #ifndef MY_MAL_STAT
     #include "my_malloc_st.h"
     #include "time_st.h"
-    unsigned long time_st;
+    long int time_st;
 #endif
 
 struct mallinfo mallinfo() {
