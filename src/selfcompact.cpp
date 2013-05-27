@@ -6,6 +6,13 @@ extern "C" {
 
 #include<string.h>
 
+#ifndef MY_MAL_STAT
+    #include "my_malloc_st.h"
+    #include "time_st.h"
+    long int time_st;
+#endif
+
+
 typedef struct item *item_p;
 struct item{
     void* data;
@@ -97,14 +104,16 @@ void* get_block(size_t size) {
     i = get_unmatched_item();
     if (i == NULL)
         return NULL;
-    void* data = morecore(size);
+    size_t page_size = page_align(size);
+    void* data = morecore(page_size);
     if (data == NULL) {
         i->next = unmatched;
         unmatched = i;
         return NULL;
     }
-    arena += alloc_align(size);
-    usdmem += alloc_align(size);
+    arena += page_align(page_size);
+    usdmem += page_align(page_size);
+    split_item(i, size);
     usdblks++;
     *last = i;
     i->data = data;
@@ -172,20 +181,31 @@ void compact() {
 }
 
 void* internal_allocate(size_t size) {
+    time_start();
     void* ptr = get_block(alloc_align(size));
+    if (arena != 0 && freemem != 0) {
+       struct myinfo stat = myinfo();
+       double fragm = ((double)(stat.freemem - stat.maxfreeblk) * 100) / stat.freemem;
+      if (fragm > 0.7) compact();
+    }
     if (ptr == NULL) {
         compact();
-        ptr = get_block(alloc_align(size));
+	ptr = get_block(alloc_align(size));
     }
+    time_st = time_stop();
+    MYSTAT();
     return ptr; 
 }
 
 void internal_free(void* ptr) {
+    time_start();
     item_p item = (item_p) ptr;
     set_free(item);
     freeblks++;
     usdblks--;
     freemem += block_size(item);
     usdmem -= block_size(item);
+    time_st = time_stop();
+    MYSTAT();
 }
 

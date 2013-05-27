@@ -12,7 +12,7 @@
 
 #define ALIGN_LOG 2
 
-#define MALLOC_DEBUG 0
+#define MALLOC_DEBUG 1
 #define MALLOC_STAT 0
 #define MY_MALLOC_STAT 1
 #include "default.h"

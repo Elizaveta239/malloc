@@ -5,7 +5,7 @@
 #include "config.h"
 #if MY_MALLOC_STAT == 1 
     #include <stdio.h>
-    #include "mallinfo.h"
+   /* #include "mallinfo.h"*/
 /*int arena;
     int freemem;
     int usdmem;
