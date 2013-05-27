@@ -5,13 +5,7 @@ extern "C" {
 }
 
 #include<string.h>
-
-#ifndef MY_MAL_STAT
-    #include "my_malloc_st.h"
-    #include "time_st.h"
-    long int time_st;
-#endif
-
+#define COMPACT_THRESHOLD 0.7
 
 typedef struct item *item_p;
 struct item{
@@ -111,13 +105,13 @@ void* get_block(size_t size) {
         unmatched = i;
         return NULL;
     }
-    arena += page_align(page_size);
-    usdmem += page_align(page_size);
-    split_item(i, size);
+    arena += page_size;
+    usdmem += page_size;
     usdblks++;
     *last = i;
     i->data = data;
     i->size = size;
+    split_item(i, size);
     set_used(i);
     return (void*)i;
 }
@@ -180,32 +174,30 @@ void compact() {
     }
 }
 
-void* internal_allocate(size_t size) {
-    time_start();
-    void* ptr = get_block(alloc_align(size));
+void try_compact() {
     if (arena != 0 && freemem != 0) {
        struct myinfo stat = myinfo();
        double fragm = ((double)(stat.freemem - stat.maxfreeblk) * 100) / stat.freemem;
-      if (fragm > 0.7) compact();
+      if (fragm > COMPACT_THRESHOLD) compact();
     }
+}
+
+void* internal_allocate(size_t size) {
+    void* ptr = get_block(alloc_align(size));
     if (ptr == NULL) {
         compact();
-	ptr = get_block(alloc_align(size));
+        ptr = get_block(alloc_align(size));
     }
-    time_st = time_stop();
-    MYSTAT();
+    try_compact();
     return ptr; 
 }
 
 void internal_free(void* ptr) {
-    time_start();
     item_p item = (item_p) ptr;
     set_free(item);
     freeblks++;
     usdblks--;
     freemem += block_size(item);
     usdmem -= block_size(item);
-    time_st = time_stop();
-    MYSTAT();
+    try_compact();
 }
-
